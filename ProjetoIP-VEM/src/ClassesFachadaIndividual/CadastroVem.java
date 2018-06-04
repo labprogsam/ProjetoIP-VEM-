@@ -1,6 +1,9 @@
 package ClassesFachadaIndividual;
 
 import ClassesBasicas.Vem;
+import Excecoes.RepositorioVemCheioException;
+import Excecoes.VemJaCadastradoException;
+import Excecoes.VemNaoEncontradoException;
 import Repositorios.RepositorioVem;
 
 public class CadastroVem {
@@ -11,7 +14,7 @@ public class CadastroVem {
         this.repositorio = repositorio;
     }
 
-    public void cadastrar(Vem vem)
+    public void cadastrar(Vem vem) throws VemJaCadastradoException, RepositorioVemCheioException
     {
         if(!this.repositorio.existe(vem.getCodigo()))
         {
@@ -19,40 +22,23 @@ public class CadastroVem {
         }
         else
         {
-            //Erro: Vem ja cadastrado
+            throw new VemJaCadastradoException();
         }
     }
-    public void remover(String codigo)
+    public void remover(String codigo) throws VemNaoEncontradoException
     {
-        if(this.repositorio.existe(codigo))
-        {
-            this.repositorio.remover(codigo);
-        }
-        else
-        {
-            //Erro: Vem nao existe
-        }
+        this.repositorio.remover(codigo);
     }
-    public void atualizar(Vem vem)
+    public void atualizar(Vem vem) throws VemNaoEncontradoException
     {
-        if(this.repositorio.existe(vem.getCodigo()))
-        {
-            this.repositorio.atualizar(vem);
-        }
-        else
-        {
-            //Erro: Vem nao existe
-        }
+        this.repositorio.atualizar(vem);
     }
-    public Vem procurar(String codigo)
+    public Vem procurar(String codigo) throws VemNaoEncontradoException
     {
-        if(this.repositorio.existe(codigo))
-        {
-            return this.repositorio.procurar(codigo);
-        }
-        else
-        {
-            //Erro: Vem nao existe
-        }
+        return this.repositorio.procurar(codigo);
+    }
+    public boolean existe(String codigo)
+    {
+        return this.repositorio.existe(codigo);
     }
 }

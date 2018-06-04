@@ -1,6 +1,8 @@
 package Repositorios;
 
 import ClassesBasicas.Vem;
+import Excecoes.RepositorioVemCheioException;
+import Excecoes.VemNaoEncontradoException;
 
 public class RepositorioVemArray implements RepositorioVem{
     private Vem[] arrayVem;
@@ -12,46 +14,68 @@ public class RepositorioVemArray implements RepositorioVem{
         this.indice = 0;
     }
 
-    public void inserir(Vem vem)
+    public void inserir(Vem vem) throws RepositorioVemCheioException
     {
-        this.arrayVem[this.indice] = vem;
-        this.indice++;
-    }
-    public void remover(String codigo)
-    {
-        boolean removeu = false;
-        for(int i =0; i < this.indice && !removeu; i++)
+        if(this.indice < this.arrayVem.length)
         {
-            if(this.arrayVem[i].getCodigo().equals(codigo))
-            {
-                this.arrayVem[i] = null;
-                removeu = true;
-                for(int j = i; j < this.indice - 1; j++)
-                {
-                    if(this.arrayVem[j] == null)
-                    {
-                        Vem aux = this.arrayVem[j];
-                        this.arrayVem[j] = this.arrayVem[j+1];
-                        this.arrayVem[j+1] = aux;
-                    }
-                }
-            }
+            this.arrayVem[this.indice] = vem;
+            this.indice++;
+        }
+        else
+        {
+            throw new RepositorioVemCheioException();
         }
 
     }
-    public void atualizar(Vem vem)
+    public void remover(String codigo) throws VemNaoEncontradoException
     {
-        boolean atualizou = false;
-        for(int i = 0; i < this.indice && !atualizou; i++)
+        if(this.existe(codigo))
         {
-            if(this.arrayVem[i].getCodigo().equals(vem.getCodigo()))
+            boolean removeu = false;
+            for(int i =0; i < this.indice && !removeu; i++)
             {
-                arrayVem[i] = vem;
-                atualizou = true;
+                if(this.arrayVem[i].getCodigo().equals(codigo))
+                {
+                    this.arrayVem[i] = null;
+                    removeu = true;
+                    for(int j = i; j < this.indice - 1; j++)
+                    {
+                        if(this.arrayVem[j] == null)
+                        {
+                            Vem aux = this.arrayVem[j];
+                            this.arrayVem[j] = this.arrayVem[j+1];
+                            this.arrayVem[j+1] = aux;
+                        }
+                    }
+                    this.indice--;
+                }
             }
         }
+        else
+        {
+            throw new VemNaoEncontradoException();
+        }
     }
-    public Vem procurar(String codigo)
+    public void atualizar(Vem vem) throws VemNaoEncontradoException
+    {
+        if(this.existe(vem.getCodigo()))
+        {
+            boolean atualizou = false;
+            for(int i = 0; i < this.indice && !atualizou; i++)
+            {
+                if(this.arrayVem[i].getCodigo().equals(vem.getCodigo()))
+                {
+                    arrayVem[i] = vem;
+                    atualizou = true;
+                }
+            }
+        }
+        else
+        {
+            throw new VemNaoEncontradoException();
+        }
+    }
+    public Vem procurar(String codigo) throws VemNaoEncontradoException
     {
         boolean achou = false;
         Vem resposta = null;
@@ -62,6 +86,10 @@ public class RepositorioVemArray implements RepositorioVem{
                 resposta = arrayVem[i];
                 achou = true;
             }
+        }
+        if(!achou)
+        {
+            throw new VemNaoEncontradoException();
         }
         return resposta;
     }
