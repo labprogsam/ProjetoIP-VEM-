@@ -2,7 +2,7 @@ package Repositorios;
 
 import Excecoes.EmpresaNaoEncontradaException;
 
-import BasicClassEmpresa.EmpresaVem;
+import ClassesBasicas.EmpresaVem;
 
 public class RepositorioEmpresaArray implements InterfaceRepositorioEmpresa {
 	private EmpresaVem[] contas;

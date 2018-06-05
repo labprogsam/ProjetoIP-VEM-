@@ -1,4 +1,4 @@
-package BasicClassEmpresa;
+package ClassesBasicas;
 
 public class EmpresaVem {
 	private String nomeEmpresa;

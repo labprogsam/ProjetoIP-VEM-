@@ -1,6 +1,6 @@
 package Repositorios;
 
-import BasicClassEmpresa.EmpresaVem;
+import ClassesBasicas.EmpresaVem;
 import Excecoes.EmpresaJaCadastradaException;
 import Excecoes.EmpresaNaoEncontradaException;
 

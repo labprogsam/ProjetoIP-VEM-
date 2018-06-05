@@ -1,6 +1,6 @@
-package ClasseFachada;
+package ClassesFachadaIndividual;
 import Excecoes.EmpresaJaCadastradaException;
-import BasicClassEmpresa.EmpresaVem;
+import ClassesBasicas.EmpresaVem;
 import Repositorios.RepositorioEmpresaArray;
 
 public class CadastroEmpresa {
