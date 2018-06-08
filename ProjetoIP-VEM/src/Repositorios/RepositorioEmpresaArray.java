@@ -9,12 +9,15 @@ public class RepositorioEmpresaArray implements InterfaceRepositorioEmpresa {
 	private EmpresaVem[] contas;
 	private int indice;
 
-	// Constructor
+	     			// Constructor
+	
 	public RepositorioEmpresaArray() {
 		this.contas = new EmpresaVem[10];
 		this.indice = 0;
 	}
-
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+	
 	public void inserir(EmpresaVem empresa) throws RepositorioEmpresaCheioException {
 		if (this.indice < this.contas.length) {
 			this.contas[this.indice] = empresa;
@@ -23,7 +26,9 @@ public class RepositorioEmpresaArray implements InterfaceRepositorioEmpresa {
 			throw new RepositorioEmpresaCheioException();
 		}
 	}
-
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+	
 	public void remover(String cnpj) throws EmpresaNaoEncontradaException {
 		if (this.existe(cnpj) == true) {
 			for (int i = 0; i < this.indice; i++) {
@@ -34,6 +39,7 @@ public class RepositorioEmpresaArray implements InterfaceRepositorioEmpresa {
 			}
 			
 			// Esse for servirá para organizar o array após algum elemento ser retirado.
+			
 			for (int i = 0; i < this.indice; i++) {
 				if (this.contas[i] == null && this.contas[i + 1] != null) {
 					this.contas[i] = contas[i + 1];
@@ -47,9 +53,9 @@ public class RepositorioEmpresaArray implements InterfaceRepositorioEmpresa {
 		}
 
 	}
-
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 	
-	// Esse método tem como objetivo atualizar as informações de alguma empresa.
 	public void atualizarEmpresa(EmpresaVem empresa) throws EmpresaNaoEncontradaException {
 		if (this.existe(empresa.getCnpj())) {
 			for (int i = 0; i < this.indice; i++) {
@@ -61,7 +67,8 @@ public class RepositorioEmpresaArray implements InterfaceRepositorioEmpresa {
 			throw new EmpresaNaoEncontradaException();
 		}
 	}
-
+//---------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------	
 	
 	public boolean existe(String cnpj) {
 		for (int i = 0; i < this.indice; i++) {
@@ -71,7 +78,8 @@ public class RepositorioEmpresaArray implements InterfaceRepositorioEmpresa {
 		}
 		return false;
 	}
-
+//----------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------	
 	
 	public EmpresaVem procurar(String cnpj) throws EmpresaNaoEncontradaException {
 
@@ -87,4 +95,6 @@ public class RepositorioEmpresaArray implements InterfaceRepositorioEmpresa {
 		}
 		return null;
 	}
+//------------------------------------------------------------------------------------------------------	
+//------------------------------------------------------------------------------------------------------
 }

@@ -8,6 +8,9 @@ public class RepositorioEmpresasLista implements InterfaceRepositorioEmpresa {
 	private EmpresaVem empresa;
 	private RepositorioEmpresasLista proximo;
 
+//----------------------------------------------------------------------------------------------------		
+//----------------------------------------------------------------------------------------------------	
+	
 	public void inserir(EmpresaVem empresa) throws EmpresaJaCadastradaException {
 
 		if (this.empresa == null) {
@@ -21,7 +24,9 @@ public class RepositorioEmpresasLista implements InterfaceRepositorioEmpresa {
 			this.proximo.inserir(empresa);
 		}
 	}
-
+//----------------------------------------------------------------------------------------------------	
+//----------------------------------------------------------------------------------------------------	
+	
 	public void remover(String cnpj) throws EmpresaNaoEncontradaException {
 		if (this.empresa == null) {
 			throw new EmpresaNaoEncontradaException();
@@ -33,7 +38,9 @@ public class RepositorioEmpresasLista implements InterfaceRepositorioEmpresa {
 			this.proximo.remover(cnpj);
 		}
 	}
-
+//----------------------------------------------------------------------------------------------------	
+//----------------------------------------------------------------------------------------------------	
+	
 	public void atualizarEmpresa(EmpresaVem empresa) throws EmpresaNaoEncontradaException {
 
 		if (this.empresa == null) {
@@ -44,7 +51,9 @@ public class RepositorioEmpresasLista implements InterfaceRepositorioEmpresa {
 			this.proximo.atualizarEmpresa(empresa);
 		}
 	}
-
+//----------------------------------------------------------------------------------------------------	
+//----------------------------------------------------------------------------------------------------	
+	
 	public boolean existe(String cnpj) {
 		if (this.empresa == null) {
 			return false;
@@ -54,7 +63,9 @@ public class RepositorioEmpresasLista implements InterfaceRepositorioEmpresa {
 			return this.proximo.existe(cnpj);
 		}
 	}
-
+//----------------------------------------------------------------------------------------------------	
+//----------------------------------------------------------------------------------------------------	
+	
 	public EmpresaVem procurar(String cnpj) throws EmpresaNaoEncontradaException {
 		
 		if (this.empresa == null) {
@@ -66,5 +77,6 @@ public class RepositorioEmpresasLista implements InterfaceRepositorioEmpresa {
 		}
 
 	}
-
+//----------------------------------------------------------------------------------------------------	
+//----------------------------------------------------------------------------------------------------	
 }
