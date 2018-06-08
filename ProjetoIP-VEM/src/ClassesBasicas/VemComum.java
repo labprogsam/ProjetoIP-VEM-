@@ -2,7 +2,7 @@ package ClassesBasicas;
 
 public class VemComum extends Vem {
     private static final double custoPassagem = 3.2;
-    public VemComum(String codigo, Usuario usuario, Empresa empresa)
+    public VemComum(String codigo, Pessoa usuario, EmpresaVem empresa)
     {
         super(codigo,usuario,empresa);
     }

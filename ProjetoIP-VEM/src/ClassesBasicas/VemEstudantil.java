@@ -6,7 +6,7 @@ public class VemEstudantil extends Vem {
     private double bonus;
     //como o construtor da superclasse exige um codigo, um usuario e uma empresa, é necessario passarmos
     //como parametro aqui tambem.
-    public VemEstudantil(String codigo, Usuario usuario, Empresa empresa)
+    public VemEstudantil(String codigo,Pessoa usuario, EmpresaVem empresa)
     {
         super(codigo,usuario,empresa);
         this.viagens = 0;

@@ -2,12 +2,12 @@ package ClassesBasicas;
 
 public abstract class Vem {
     private String codigo;
-    private Usuario usuario;
-    private Empresa empresa;
+    private Pessoa usuario;
+    private EmpresaVem empresa;
     private double saldo;
     private boolean ativo;
     //Para ser criado um vem é necessario passar um codigo, um usuario e uma empresa responsavel pela fabricação do vem
-    public Vem(String codigo, Usuario usuario, Empresa empresa)
+    public Vem(String codigo, Pessoa usuario, EmpresaVem empresa)
     {
         this.codigo = codigo;
         this.usuario = usuario;
@@ -19,10 +19,10 @@ public abstract class Vem {
     {
         return this.codigo;
     }
-    public Usuario getUsuario() {
+    public Pessoa getUsuario() {
         return this.usuario;
     }
-    public Empresa getEmpresa()
+    public EmpresaVem getEmpresa()
     {
         return this.empresa;
     }
