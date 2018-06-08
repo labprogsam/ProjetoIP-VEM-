@@ -1,5 +1,8 @@
 package ClassesBasicas;
 
+import Excecoes.RecargaInvalidaException;
+import Excecoes.SaldoInsuficienteException;
+
 public abstract class Vem {
     private String codigo;
     private Pessoa usuario;
@@ -49,8 +52,8 @@ public abstract class Vem {
         this.ativo = true;
     }
     //Esses metodos podem ser imprementadoss de forma diferente nas subclasses
-    public abstract void recarregar(double valor);
-    public abstract void pagar();
+    public abstract void recarregar(double valor) throws RecargaInvalidaException;
+    public abstract void pagar() throws SaldoInsuficienteException;
 
 
 }

@@ -1,5 +1,8 @@
 package ClassesBasicas;
 
+import Excecoes.RecargaInvalidaException;
+import Excecoes.SaldoInsuficienteException;
+
 public class VemEstudantil extends Vem {
     private static final double custoPassagem = 1.6;
     private int viagens;
@@ -21,19 +24,34 @@ public class VemEstudantil extends Vem {
         return this.bonus;
     }
     //implementação do metodo abstrato recarregar
-    public void recarregar(double valor)
+    public void recarregar(double valor) throws RecargaInvalidaException
     {
-        this.setSaldo(this.getSaldo() + valor);
+        if(valor >= 0 )
+        {
+            this.setSaldo(this.getSaldo() + valor);
+        }
+        else
+        {
+            throw new RecargaInvalidaException();
+        }
+
     }
     //implementação do metodo abstrato pagar
-    public void pagar()
+    public void pagar() throws SaldoInsuficienteException
     {
-        this.viagens += 1;
-        double valor = this.getSaldo() - this.custoPassagem;
-        this.setSaldo(valor);
+        if(this.getSaldo() >= this.custoPassagem)
+        {
+            this.viagens += 1;
+            double valor = this.getSaldo() - this.custoPassagem;
+            this.setSaldo(valor);
+        }
+        else
+        {
+            throw new SaldoInsuficienteException(this.getSaldo());
+        }
     }
     //O metodo render bonus acrescenta no saldo um valor que depende de quantas viagens o vem fez
-    public void renderBonus()
+    public void renderBonus()throws RecargaInvalidaException
     {
         double valor = this.viagens * 0.2;
         this.recarregar(valor);

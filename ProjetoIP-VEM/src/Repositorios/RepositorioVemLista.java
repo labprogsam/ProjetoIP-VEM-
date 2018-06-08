@@ -27,61 +27,51 @@ public class RepositorioVemLista implements RepositorioVem {
     }
     public void remover(String codigo) throws VemNaoEncontradoException
     {
-        if(this.existe(codigo))
+
+        if(this.vem.getCodigo().equals(codigo))
         {
-            if(this.vem.getCodigo().equals(codigo))
-            {
-                this.vem = this.proximo.vem;
-                this.proximo = this.proximo.proximo;
-            }
-            else
-            {
-                this.proximo.remover(codigo);
-            }
+            this.vem = this.proximo.vem;
+            this.proximo = this.proximo.proximo;
         }
-        else
+        else if(this.vem == null)
         {
             throw new VemNaoEncontradoException();
         }
-
+        else
+        {
+            this.proximo.remover(codigo);
+        }
     }
     public void  atualizar(Vem vem) throws VemNaoEncontradoException
     {
-        if(this.existe(vem.getCodigo()))
+        if(this.vem.getCodigo().equals(vem.getCodigo()))
         {
-            if(this.vem.getCodigo().equals(vem.getCodigo()))
-            {
-                this.vem = vem;
-            }
-            else
-            {
-                this.proximo.atualizar(vem);
-            }
+            this.vem = vem;
         }
-        else
+        else if(this.vem == null)
         {
             throw new VemNaoEncontradoException();
         }
-
+        else
+        {
+            this.proximo.atualizar(vem);
+        }
     }
     public Vem procurar(String codigo) throws VemNaoEncontradoException
     {
-        if(this.existe(codigo))
+
+        if(this.vem.getCodigo().equals(codigo))
         {
-            if(this.vem.getCodigo().equals(codigo))
-            {
-                return this.vem;
-            }
-            else
-            {
-                return this.proximo.procurar(codigo);
-            }
+            return this.vem;
         }
-        else
+        else if(this.vem == null)
         {
             throw new VemNaoEncontradoException();
         }
-
+        else
+        {
+            return this.proximo.procurar(codigo);
+        }
     }
     public boolean existe(String codigo) {
         if(this.vem == null)
@@ -96,6 +86,5 @@ public class RepositorioVemLista implements RepositorioVem {
         {
             return this.proximo.existe(codigo);
         }
-
     }
 }

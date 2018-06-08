@@ -1,9 +1,9 @@
 package ClassesFachadaIndividual;
 
 import ClassesBasicas.Vem;
-import Excecoes.RepositorioVemCheioException;
-import Excecoes.VemJaCadastradoException;
-import Excecoes.VemNaoEncontradoException;
+import ClassesBasicas.VemEstudantil;
+import ClassesBasicas.VemTrabalhador;
+import Excecoes.*;
 import Repositorios.RepositorioVem;
 
 public class CadastroVem {
@@ -22,7 +22,7 @@ public class CadastroVem {
         }
         else
         {
-            throw new VemJaCadastradoException();
+            throw new VemJaCadastradoException(vem.getCodigo());
         }
     }
     public void remover(String codigo) throws VemNaoEncontradoException
@@ -40,5 +40,30 @@ public class CadastroVem {
     public boolean existe(String codigo)
     {
         return this.repositorio.existe(codigo);
+    }
+    //Metodo da classe VemEstudantil
+    public void renderBonus(String codigo) throws VemNaoEncontradoException, RecargaInvalidaException, TipoVemInvalidoException
+    {
+        Vem vemEstudantil = this.repositorio.procurar(codigo);
+        if(vemEstudantil instanceof VemEstudantil)
+        {
+            ((VemEstudantil) vemEstudantil).renderBonus();
+        }
+        else
+        {
+            throw new TipoVemInvalidoException();
+        }
+    }
+    public void renderBonusFerias(String codigo) throws TipoVemInvalidoException, VemNaoEncontradoException,PeriodoFeriasException
+    {
+        Vem vemTrabalhador = this.repositorio.procurar(codigo);
+        if(vemTrabalhador instanceof VemTrabalhador)
+        {
+            ((VemTrabalhador) vemTrabalhador).renderBonusFerias();
+        }
+        else
+        {
+            throw new TipoVemInvalidoException();
+        }
     }
 }
