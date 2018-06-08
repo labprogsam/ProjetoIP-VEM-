@@ -20,7 +20,6 @@ public class RepositorioEmpresasLista implements InterfaceRepositorioEmpresa {
 		} else {
 			this.proximo.inserir(empresa);
 		}
-
 	}
 
 	public void remover(String cnpj) throws EmpresaNaoEncontradaException {
@@ -39,24 +38,33 @@ public class RepositorioEmpresasLista implements InterfaceRepositorioEmpresa {
 
 		if (this.empresa == null) {
 			throw new EmpresaNaoEncontradaException();
-		}
-		else if (this.empresa.getCnpj().equals(empresa.getCnpj())) {
+		} else if (this.empresa.getCnpj().equals(empresa.getCnpj())) {
 			this.empresa = empresa;
 		} else {
 			this.proximo.atualizarEmpresa(empresa);
-
 		}
-
 	}
 
 	public boolean existe(String cnpj) {
-		if (this.empresa.getCnpj().equals(cnpj)) {
+		if (this.empresa == null) {
+			return false;
+		} else if (this.empresa.getCnpj().equals(cnpj)) {
 			return true;
 		} else {
 			return this.proximo.existe(cnpj);
 		}
-		// Pergunta a hebert se é necessario tu configurar na interface para informar
-		// qnd a empresa n existe
+	}
+
+	public EmpresaVem procurar(String cnpj) throws EmpresaNaoEncontradaException {
+		
+		if (this.empresa == null) {
+			throw new EmpresaNaoEncontradaException();
+		} else if (this.empresa.getCnpj().equals(cnpj)) {
+			return this.empresa;
+		} else {
+			return this.proximo.procurar(cnpj);
+		}
+
 	}
 
 }

@@ -1,12 +1,14 @@
 package Repositorios;
+import Excecoes.EmpresaJaCadastradaException;
 import Excecoes.EmpresaNaoEncontradaException;
 import ClassesBasicas.EmpresaVem;
-import Excecoes.EmpresaJaCadastradaException;
+import Excecoes.RepositorioEmpresaCheioException;
 
 public interface InterfaceRepositorioEmpresa {
 	 
 	void inserir(EmpresaVem empresa)
-	 	throws EmpresaJaCadastradaException;
+		throws RepositorioEmpresaCheioException,
+		EmpresaJaCadastradaException;
 	
 	 void remover(String cnpj)
 	 	throws EmpresaNaoEncontradaException;
@@ -15,6 +17,9 @@ public interface InterfaceRepositorioEmpresa {
 	 	throws EmpresaNaoEncontradaException;
 	 
 	 boolean existe (String cnpj);
+			 
+	 EmpresaVem procurar (String cnpj) 
+	 	throws EmpresaNaoEncontradaException;
 	 	
 
 }

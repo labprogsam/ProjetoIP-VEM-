@@ -1,6 +1,7 @@
 package Repositorios;
 
 import Excecoes.EmpresaNaoEncontradaException;
+import Excecoes.RepositorioEmpresaCheioException;
 
 import ClassesBasicas.EmpresaVem;
 
@@ -14,9 +15,13 @@ public class RepositorioEmpresaArray implements InterfaceRepositorioEmpresa {
 		this.indice = 0;
 	}
 
-	public void inserir(EmpresaVem empresa) {
-		this.contas[this.indice] = empresa;
-		this.indice++;
+	public void inserir(EmpresaVem empresa) throws RepositorioEmpresaCheioException {
+		if (this.indice < this.contas.length) {
+			this.contas[this.indice] = empresa;
+			this.indice++;
+		} else {
+			throw new RepositorioEmpresaCheioException();
+		}
 	}
 
 	public void remover(String cnpj) throws EmpresaNaoEncontradaException {
@@ -27,7 +32,7 @@ public class RepositorioEmpresaArray implements InterfaceRepositorioEmpresa {
 					this.indice--;
 				}
 			}
-
+			
 			// Esse for servirá para organizar o array após algum elemento ser retirado.
 			for (int i = 0; i < this.indice; i++) {
 				if (this.contas[i] == null && this.contas[i + 1] != null) {
@@ -43,8 +48,8 @@ public class RepositorioEmpresaArray implements InterfaceRepositorioEmpresa {
 
 	}
 
+	
 	// Esse método tem como objetivo atualizar as informações de alguma empresa.
-
 	public void atualizarEmpresa(EmpresaVem empresa) throws EmpresaNaoEncontradaException {
 		if (this.existe(empresa.getCnpj())) {
 			for (int i = 0; i < this.indice; i++) {
@@ -57,6 +62,7 @@ public class RepositorioEmpresaArray implements InterfaceRepositorioEmpresa {
 		}
 	}
 
+	
 	public boolean existe(String cnpj) {
 		for (int i = 0; i < this.indice; i++) {
 			if (this.contas[i].getCnpj().equals(cnpj)) {
@@ -64,6 +70,21 @@ public class RepositorioEmpresaArray implements InterfaceRepositorioEmpresa {
 			}
 		}
 		return false;
+	}
 
+	
+	public EmpresaVem procurar(String cnpj) throws EmpresaNaoEncontradaException {
+
+		boolean achou = false;
+		for (int i = 0; i < this.indice; i++) {
+			if (this.contas[i].getCnpj().equals(cnpj)) {
+				achou = true;
+				return contas[i];
+			}
+		}
+		if (achou == false) {
+			throw new EmpresaNaoEncontradaException();
+		}
+		return null;
 	}
 }
