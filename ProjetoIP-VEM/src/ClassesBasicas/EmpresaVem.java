@@ -27,10 +27,6 @@ public class EmpresaVem {
 		return this.cnpj;
 	}
 //----------------------------------------------------------------------------------------------------	
-	public void setCnpj (String novoCnpj) {
-		this.cnpj = novoCnpj;
-	}
-//----------------------------------------------------------------------------------------------------	
 	public String getEndereco () {
 		return this.endereco;
 	}

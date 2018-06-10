@@ -31,10 +31,6 @@ public class Pessoa {
 		return cpf;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
 	public String getRg() {
 		return rg;
 	}
