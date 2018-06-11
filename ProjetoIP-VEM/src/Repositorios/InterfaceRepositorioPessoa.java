@@ -1,11 +1,24 @@
 package Repositorios;
 import ClassesBasicas.Pessoa;
+import Excecoes.PessoaJaCadastradaException;
+import Excecoes.RepositorioPessoaCheioException;
+import Excecoes.PessoaNaoEncontradaException;
 
 public interface InterfaceRepositorioPessoa {
-	public void inserir(Pessoa pessoa);
-	public void atualizar(Pessoa pessoa);
-	public void remover(String cpf);
-	public Pessoa procurar(String cpf);
-	public boolean existe(String cpf);
-//ainda falta adicionar as exceções
+	void inserir(Pessoa pessoa)
+		throws RepositorioPessoaCheioException,
+		PessoaJaCadastradaException;
+	
+	void atualizar(Pessoa pessoa)
+		throws PessoaNaoEncontradaException;
+	
+	void remover(String cpf)
+		throws PessoaNaoEncontradaException;
+		
+	Pessoa procurar(String cpf)
+		throws PessoaNaoEncontradaException;
+		
+	boolean existe(String cpf)
+		throws PessoaNaoEncontradaException;
+		
 }

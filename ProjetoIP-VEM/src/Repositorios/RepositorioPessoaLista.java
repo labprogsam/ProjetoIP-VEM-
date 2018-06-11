@@ -1,6 +1,8 @@
 package Repositorios;
 
 import ClassesBasicas.Pessoa;
+import Excecoes.PessoaJaCadastradaException;
+import Excecoes.PessoaNaoEncontradaException;
 
 public class RepositorioPessoaLista implements InterfaceRepositorioPessoa{
 	
@@ -12,22 +14,22 @@ public class RepositorioPessoaLista implements InterfaceRepositorioPessoa{
 		this.proximo = null;
 	}
 	
-	public void inserir(Pessoa pessoa) {
+	public void inserir(Pessoa pessoa) throws PessoaJaCadastradaException{
 		if(this.pessoa == null) {
 			this.pessoa = pessoa;
 			this.proximo = new RepositorioPessoaLista();
 		}
 		else if(this.pessoa.getCpf().equals(pessoa.getCpf())) {
-			//exceção
+			throw new PessoaJaCadastradaException();
 		}
 		else {
 			this.proximo.inserir(pessoa);
 		}
 	}
 
-	public void atualizar(Pessoa pessoa) {
+	public void atualizar(Pessoa pessoa) throws PessoaNaoEncontradaException{
 		if(this.pessoa == null) {
-			//exceção
+			throw new PessoaNaoEncontradaException();
 		}
 		else if(this.pessoa.getCpf().equals(pessoa.getCpf())) {
 				this.pessoa = pessoa;
@@ -36,9 +38,9 @@ public class RepositorioPessoaLista implements InterfaceRepositorioPessoa{
 		this.proximo.atualizar(pessoa);
 	}
 
-	public void remover(String cpf) {
+	public void remover(String cpf) throws PessoaNaoEncontradaException{
 		if(this.pessoa == null) {
-			//exceção
+			throw new PessoaNaoEncontradaException();
 		}
 		else if(this.pessoa.getCpf().equals(cpf)) {
 			this.pessoa = this.proximo.pessoa;
@@ -48,9 +50,9 @@ public class RepositorioPessoaLista implements InterfaceRepositorioPessoa{
 		this.proximo.remover(cpf);
 	}
 
-	public Pessoa procurar(String cpf) {
+	public Pessoa procurar(String cpf) throws PessoaNaoEncontradaException{
 		if(this.pessoa == null) 
-			// exceção
+			throw new PessoaNaoEncontradaException();
 		if(this.pessoa.getCpf().equals(cpf))
 			return this.pessoa;
 		return this.proximo.procurar(cpf);

@@ -1,20 +1,25 @@
 package Repositorios;
 import ClassesBasicas.Pessoa;
+import Excecoes.PessoaJaCadastradaException;
+import Excecoes.RepositorioPessoaCheioException;
+import Excecoes.PessoaNaoEncontradaException;
 
 public class RepositorioPessoaArray implements InterfaceRepositorioPessoa {
 	Pessoa[] pessoas;
 	private int indice;
 
 	
-//falta colocar as exceçoes aqui
 	public RepositorioPessoaArray() {
 		this.indice = 0;
 		this.pessoas = new Pessoa[100];
 	}
 	
-	public void inserir(Pessoa pessoa) {
+	public void inserir(Pessoa pessoa) throws PessoaJaCadastradaException, RepositorioPessoaCheioException{
 		if(existe(pessoa.getCpf())) {
-			//exceção
+			throw new PessoaJaCadastradaException();
+		}
+		else if(this.indice >= this.pessoas.length) {
+			throw new RepositorioPessoaCheioException();
 		}
 		else {
 			this.pessoas[indice] = pessoa;
@@ -22,15 +27,18 @@ public class RepositorioPessoaArray implements InterfaceRepositorioPessoa {
 		}
 	}
 
-	public void atualizar(Pessoa pessoa) {
+	public void atualizar(Pessoa pessoa) throws PessoaNaoEncontradaException{
 		boolean pessoa_encontrada = false;
-		for(int i = 0; i < this.indice && pessoa_encontrada == false; i++) {
-			if(this.pessoas[i].getCpf().equals(pessoa.getCpf()))
+		if(existe(pessoa.getCpf())) {
+			for(int i = 0; i < this.indice && pessoa_encontrada == false; i++) {
 				this.pessoas[i] = pessoa;
+			}
+		}else {
+			throw new PessoaNaoEncontradaException();
 		}
 	}
 
-	public void remover(String cpf) {
+	public void remover(String cpf) throws PessoaNaoEncontradaException{
 		boolean moverPessoa = false;
 		if(existe(cpf)) {
 			for(int i = 0; i < this.indice; i++) {
@@ -43,20 +51,18 @@ public class RepositorioPessoaArray implements InterfaceRepositorioPessoa {
 						this.pessoas[i] = null;
 				}
 			}
+			this.indice -- ;
+		}else {
+			throw new PessoaNaoEncontradaException();
 		}
-		else {
-			//exceção
-		}
-		this.indice -- ;
 	}
 
-	public Pessoa procurar(String cpf) { 
+	public Pessoa procurar(String cpf) throws PessoaNaoEncontradaException { 
 		for(int i = 0; i < this.indice; i++) {
 			if(this.pessoas[i].getCpf().equals(cpf))
 				return this.pessoas[i];
 		}
-		//exceção
-		return null;
+		throw new PessoaNaoEncontradaException();
 	}
 
 	public boolean existe(String cpf) {
