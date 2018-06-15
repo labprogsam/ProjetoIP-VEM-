@@ -14,13 +14,10 @@ public class RepositorioPessoaLista implements InterfaceRepositorioPessoa{
 		this.proximo = null;
 	}
 	
-	public void inserir(Pessoa pessoa) throws PessoaJaCadastradaException{
+	public void inserir(Pessoa pessoa) {
 		if(this.pessoa == null) {
 			this.pessoa = pessoa;
 			this.proximo = new RepositorioPessoaLista();
-		}
-		else if(this.pessoa.getCpf().equals(pessoa.getCpf())) {
-			throw new PessoaJaCadastradaException();
 		}
 		else {
 			this.proximo.inserir(pessoa);

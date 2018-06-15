@@ -5,7 +5,7 @@ import Excecoes.RepositorioPessoaCheioException;
 import Excecoes.PessoaNaoEncontradaException;
 
 public class RepositorioPessoaArray implements InterfaceRepositorioPessoa {
-	Pessoa[] pessoas;
+	private Pessoa[] pessoas;
 	private int indice;
 
 	
@@ -14,11 +14,8 @@ public class RepositorioPessoaArray implements InterfaceRepositorioPessoa {
 		this.pessoas = new Pessoa[100];
 	}
 	
-	public void inserir(Pessoa pessoa) throws PessoaJaCadastradaException, RepositorioPessoaCheioException{
-		if(existe(pessoa.getCpf())) {
-			throw new PessoaJaCadastradaException();
-		}
-		else if(this.indice >= this.pessoas.length) {
+	public void inserir(Pessoa pessoa) throws RepositorioPessoaCheioException{
+		if(this.indice >= this.pessoas.length) {
 			throw new RepositorioPessoaCheioException();
 		}
 		else {
