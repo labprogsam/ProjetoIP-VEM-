@@ -1,9 +1,13 @@
 package ClassesBasicas;
 
+import Excecoes.BloquearVemException;
+import Excecoes.DesbloquearVemException;
+import Excecoes.BloquearVemException;
 import Excecoes.RecargaInvalidaException;
 import Excecoes.SaldoInsuficienteException;
 
 public abstract class Vem {
+    //Esse atributo codigo vai ser o meu idetentificador do Vem
     private String codigo;
     private Pessoa usuario;
     private EmpresaVem empresa;
@@ -43,13 +47,29 @@ public abstract class Vem {
     {
         return this.ativo;
     }
-    public void bloquearVem()
+    public void bloquearVem()throws BloquearVemException
     {
-        this.ativo = false;
+        if(this.ativo == true)
+        {
+            this.ativo = false;
+        }
+        else
+        {
+         throw new BloquearVemException();
+        }
+
     }
-    public void desbloquearVem()
+    public void desbloquearVem() throws DesbloquearVemException
     {
-        this.ativo = true;
+        if(this.ativo == false)
+        {
+            this.ativo = true;
+        }
+        else
+        {
+            throw new DesbloquearVemException();
+        }
+
     }
     //Esses metodos podem ser imprementadoss de forma diferente nas subclasses
     public abstract void recarregar(double valor) throws RecargaInvalidaException;

@@ -1,8 +1,6 @@
 package ClassesBasicas;
 
-import Excecoes.PeriodoFeriasException;
-import Excecoes.RecargaInvalidaException;
-import Excecoes.SaldoInsuficienteException;
+import Excecoes.*;
 
 public class VemTrabalhador extends Vem{
     private static final double custoPassagem = 3.2;
@@ -25,9 +23,28 @@ public class VemTrabalhador extends Vem{
     {
         return this.ferias;
     }
-    public void setFerias(boolean ferias)
+    public void entrarFerias() throws EntrarFeriasException
     {
-        this.ferias = ferias;
+        if(this.ferias == false)
+        {
+            this.ferias = true;
+        }
+        else
+        {
+            throw new EntrarFeriasException();
+        }
+    }
+    public void sairFerias() throws SairFeriasException
+    {
+        if(this.ferias == true)
+        {
+            this.ferias = false;
+        }
+        else
+        {
+            throw new SairFeriasException();
+        }
+
     }
     //Esse metodo recarrega e tira um custo de 10% do valor a ser recarregado e guarda esse custo no bonus ferias
     //para depois ser creditado no metodo renderBonusFerias

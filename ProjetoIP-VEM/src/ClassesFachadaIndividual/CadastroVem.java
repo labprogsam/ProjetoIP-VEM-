@@ -16,6 +16,7 @@ public class CadastroVem {
 
     public void cadastrar(Vem vem) throws VemJaCadastradoException, RepositorioVemCheioException
     {
+        //Verifica se nao existe um vem com o mesmo codigo antes que ele seja inserido
         if(!this.repositorio.existe(vem.getCodigo()))
         {
             this.repositorio.inserir(vem);
@@ -65,5 +66,15 @@ public class CadastroVem {
         {
             throw new TipoVemInvalidoException();
         }
+    }
+    public void bloquear(String codigo) throws VemNaoEncontradoException, BloquearVemException
+    {
+        Vem vem = this.repositorio.procurar(codigo);
+        vem.bloquearVem();
+    }
+    public void desbloquear(String codigo)throws  VemNaoEncontradoException, DesbloquearVemException
+    {
+        Vem vem = this.repositorio.procurar(codigo);
+        vem.desbloquearVem();
     }
 }
