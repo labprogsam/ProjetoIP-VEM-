@@ -69,6 +69,7 @@ public class AgenciaVem {
     {
         this.cadastroVem.recarregarEspecial(codigo,valor);
     }
+    //Metodo da classe VemLivre
     public void pagarEspecial(String codigo) throws VemNaoEncontradoException, SaldoInsuficienteException, TipoVemInvalidoException
     {
         this.cadastroVem.pagarEspecial(codigo);
@@ -101,7 +102,38 @@ public class AgenciaVem {
     {
         this.cadastroVem.sairFerias(codigo);
     }
-
+    
+    
+    //-------------------------------------------------------------------------------------------------
+    //Metodos relacionados diretamente com classe CadastroEmpresa
+    
+    //Metodo relacionados ao Repositorio
+    public void cadastrarEmpresa (EmpresaVem empresa) throws EmpresaJaCadastradaException, RepositorioEmpresaCheioException 
+    {
+    	this.cadastroEmpresa.cadastrarEmpresa(empresa);
+    }
+    //Metodo relacionados ao Repositorio
+    public void removerEmpresa (String cnpj) throws EmpresaNaoEncontradaException  
+    {
+		this.cadastroEmpresa.removerEmpresa(cnpj);
+	}
+    //Metodo relacionados ao Repositorio
+    public void atualizarEmpresaEmpresa(EmpresaVem empresa) throws EmpresaNaoEncontradaException 
+    {
+    	this.cadastroEmpresa.atualizarEmpresa(empresa);
+    }
+    //Metodo relacionados ao Repositorio
+    public boolean existeEmpresa (String cnpj) 
+    {
+    	this.cadastroEmpresa.existeEmpresa(cnpj);
+    }
+    //Metodo relacionados ao Repositorio
+	public EmpresaVem procurarEmpresa (String cnpj) throws EmpresaNaoEncontradaException 
+	{
+		this.cadastroEmpresa.procurarEmpresa(cnpj);
+	}
+	
+	
 
 
 

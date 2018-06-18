@@ -2,23 +2,22 @@ package ClassesFachadaIndividual;
 import Excecoes.EmpresaJaCadastradaException;
 import Excecoes.EmpresaNaoEncontradaException;
 import ClassesBasicas.EmpresaVem;
-import Repositorios.RepositorioEmpresaArray;
-import Repositorios.RepositorioEmpresasLista;
 import Excecoes.RepositorioEmpresaCheioException;
+import Repositorios.InterfaceRepositorioEmpresa;
 
 
 	//-------------------------------------Classe Fachada Empresa---------------------------------------//
 
-public class CadastroEmpresa {
+	public class CadastroEmpresa {
 							
-	private RepositorioEmpresaArray repContas;
+	private InterfaceRepositorioEmpresa repContas;
 	
-	public CadastroEmpresa (RepositorioEmpresaArray rep)  {
+	public CadastroEmpresa (InterfaceRepositorioEmpresa rep)  {
 		this.repContas = rep;
 	}
 	
 	//--------------------------------------Cadastrar Empresa------------------------------------------//
-	public void cadastrar (EmpresaVem empresa) throws EmpresaJaCadastradaException, RepositorioEmpresaCheioException {
+	public void cadastrarEmpresa (EmpresaVem empresa) throws EmpresaJaCadastradaException, RepositorioEmpresaCheioException {
 		if(this.repContas.existe(empresa.getCnpj()) == false) {
 			this.repContas.inserir(empresa);
 		} else {
@@ -27,22 +26,22 @@ public class CadastroEmpresa {
 	}
 	
 	//-------------------------------------Remover Empresa--------------------------------------------//
-	public void remover (String cnpj) throws EmpresaNaoEncontradaException  {
+	public void removerEmpresa (String cnpj) throws EmpresaNaoEncontradaException  {
 		this.repContas.remover(cnpj);
 	}
 	
 	//------------------------------------Atualizar Empresa-------------------------------------------//
-	public void atualizar (EmpresaVem empresa) throws EmpresaNaoEncontradaException {
+	public void atualizarEmpresa (EmpresaVem empresa) throws EmpresaNaoEncontradaException {
 		this.repContas.atualizarEmpresa(empresa);
 	}
 	
 	//---------------------------------------Verificador----------------------------------------------//
-	public boolean existe (String cnpj) {
+	public boolean existeEmpresa (String cnpj) {
 		return this.repContas.existe(cnpj);
 	}
 	
 	//-------------------------------------Procurar Empresa--------------------------------------------//
-	public EmpresaVem procurar (String cnpj) throws EmpresaNaoEncontradaException {
+	public EmpresaVem procurarEmpresa (String cnpj) throws EmpresaNaoEncontradaException {
 		return this.repContas.procurar(cnpj);
 	}
 	
