@@ -56,15 +56,53 @@ public class AgenciaVem {
     {
         return this.cadastroVem.existe(codigo);
     }
+    public void recarregar(String codigo, double valor) throws VemNaoEncontradoException, RecargaInvalidaException
+    {
+        this.cadastroVem.recarregar(codigo,valor);
+    }
+    public void pagar(String codigo) throws VemNaoEncontradoException, SaldoInsuficienteException
+    {
+        this.cadastroVem.pagar(codigo);
+    }
+    //Metodo da classe VemLivre
+    public void recarregarEspecial(String codigo, double valor) throws VemNaoEncontradoException, RecargaInvalidaException, TipoVemInvalidoException
+    {
+        this.cadastroVem.recarregarEspecial(codigo,valor);
+    }
+    public void pagarEspecial(String codigo) throws VemNaoEncontradoException, SaldoInsuficienteException, TipoVemInvalidoException
+    {
+        this.cadastroVem.pagarEspecial(codigo);
+    }
     //Metodo da classe VemEstudantil
     public void renderBonus(String codigo) throws VemNaoEncontradoException, TipoVemInvalidoException, RecargaInvalidaException
     {
         this.cadastroVem.renderBonus(codigo);
     }
+    //Metodo da classe vemTrabalhador
     public  void renderBonusFerias(String codigo) throws VemNaoEncontradoException, TipoVemInvalidoException, PeriodoFeriasException
     {
         this.cadastroVem.renderBonusFerias(codigo);
     }
+    public void bloquearVem(String codigo) throws VemNaoEncontradoException, BloquearVemException
+    {
+        this.cadastroVem.bloquearVem(codigo);
+    }
+    public void desbloquearVem(String codigo) throws VemNaoEncontradoException, DesbloquearVemException
+    {
+        this.cadastroVem.desbloquearVem(codigo);
+    }
+    //Metodo da classe vemTrabalhador
+    public void entrarFerias(String codigo) throws VemNaoEncontradoException, EntrarFeriasException, TipoVemInvalidoException
+    {
+        this.cadastroVem.entrarFerias(codigo);
+    }
+    //Metodo da classe VemTrabalhador
+    public void sairFerias(String codigo) throws VemNaoEncontradoException, SairFeriasException, TipoVemInvalidoException
+    {
+        this.cadastroVem.sairFerias(codigo);
+    }
+
+
 
 
 }

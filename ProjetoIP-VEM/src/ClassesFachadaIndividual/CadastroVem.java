@@ -2,6 +2,7 @@ package ClassesFachadaIndividual;
 
 import ClassesBasicas.Vem;
 import ClassesBasicas.VemEstudantil;
+import ClassesBasicas.VemLivre;
 import ClassesBasicas.VemTrabalhador;
 import Excecoes.*;
 import Repositorios.RepositorioVem;
@@ -42,6 +43,41 @@ public class CadastroVem {
     {
         return this.repositorio.existe(codigo);
     }
+    public void recarregar(String codigo, double valor) throws VemNaoEncontradoException, RecargaInvalidaException
+    {
+        Vem vem = this.repositorio.procurar(codigo);
+        vem.recarregar(valor);
+    }
+    public void pagar(String codigo) throws VemNaoEncontradoException, SaldoInsuficienteException
+    {
+        Vem vem = this.repositorio.procurar(codigo);
+        vem.pagar();
+    }
+    //Metodo da classe vemLivre
+    public void recarregarEspecial(String codigo, double valor) throws VemNaoEncontradoException, TipoVemInvalidoException, RecargaInvalidaException
+    {
+        Vem vemLivre = this.repositorio.procurar(codigo);
+        if(vemLivre instanceof VemLivre)
+        {
+            ((VemLivre)vemLivre).recarregarEspecial(valor);
+        }
+        else
+        {
+            throw new TipoVemInvalidoException();
+        }
+    }
+    public void pagarEspecial(String codigo) throws VemNaoEncontradoException, TipoVemInvalidoException, SaldoInsuficienteException
+    {
+        Vem vemLivre = this.repositorio.procurar(codigo);
+        if(vemLivre instanceof VemLivre)
+        {
+            ((VemLivre) vemLivre).pagarEspecial();
+        }
+        else
+        {
+            throw new TipoVemInvalidoException();
+        }
+    }
     //Metodo da classe VemEstudantil
     public void renderBonus(String codigo) throws VemNaoEncontradoException, RecargaInvalidaException, TipoVemInvalidoException
     {
@@ -55,6 +91,7 @@ public class CadastroVem {
             throw new TipoVemInvalidoException();
         }
     }
+    //Metodo da classe vemTrabalhador
     public void renderBonusFerias(String codigo) throws TipoVemInvalidoException, VemNaoEncontradoException,PeriodoFeriasException
     {
         Vem vemTrabalhador = this.repositorio.procurar(codigo);
@@ -67,14 +104,41 @@ public class CadastroVem {
             throw new TipoVemInvalidoException();
         }
     }
-    public void bloquear(String codigo) throws VemNaoEncontradoException, BloquearVemException
+    public void bloquearVem(String codigo) throws VemNaoEncontradoException, BloquearVemException
     {
         Vem vem = this.repositorio.procurar(codigo);
         vem.bloquearVem();
     }
-    public void desbloquear(String codigo)throws  VemNaoEncontradoException, DesbloquearVemException
+    public void desbloquearVem(String codigo)throws  VemNaoEncontradoException, DesbloquearVemException
     {
         Vem vem = this.repositorio.procurar(codigo);
         vem.desbloquearVem();
+    }
+    //Metodo da classe VemTrabalhador
+    public void entrarFerias(String codigo) throws EntrarFeriasException, VemNaoEncontradoException, TipoVemInvalidoException
+    {
+        Vem vemTrabalhador = this.repositorio.procurar(codigo);
+        if(vemTrabalhador instanceof VemTrabalhador)
+        {
+            ((VemTrabalhador) vemTrabalhador).entrarFerias();
+        }
+        else
+        {
+            throw new TipoVemInvalidoException();
+        }
+
+    }
+    //Metodo da classe VemTrabalhador
+    public void sairFerias(String codigo) throws VemNaoEncontradoException, SairFeriasException, TipoVemInvalidoException
+    {
+        Vem vemTrabalhador = this.repositorio.procurar(codigo);
+        if(vemTrabalhador instanceof VemTrabalhador)
+        {
+            ((VemTrabalhador) vemTrabalhador).sairFerias();
+        }
+        else
+        {
+            throw new TipoVemInvalidoException();
+        }
     }
 }

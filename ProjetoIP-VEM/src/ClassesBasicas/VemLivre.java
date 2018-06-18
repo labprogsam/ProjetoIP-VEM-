@@ -19,7 +19,7 @@ public class VemLivre extends Vem{
 		}
 	}
 	public void pagarEspecial() throws SaldoInsuficienteException{
-		if(this.saldoEspecial > this.valorPassagem) {
+		if(this.saldoEspecial >= this.valorPassagem) {
 			this.saldoEspecial -= this.valorPassagem; 
 		}else {
 			throw new SaldoInsuficienteException(this.saldoEspecial);
@@ -36,7 +36,7 @@ public class VemLivre extends Vem{
 		}
 	}
 	public void pagar() throws SaldoInsuficienteException {
-		if(this.getSaldo() > this.valorPassagem) {
+		if(this.getSaldo() >= this.valorPassagem) {
 			this.setSaldo(this.getSaldo() - this.valorPassagem); 
 		}else {
 			throw new SaldoInsuficienteException(this.getSaldo());
