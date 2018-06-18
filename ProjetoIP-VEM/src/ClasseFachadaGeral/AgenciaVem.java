@@ -12,10 +12,11 @@ public class AgenciaVem {
     private CadastroEmpresa cadastroEmpresa;
     private CadastroPessoa cadastroPessoa;
 
-    public AgenciaVem(CadastroVem cadastroVem, CadastroEmpresa cadastroEmpresa)
+    public AgenciaVem(CadastroVem cadastroVem, CadastroEmpresa cadastroEmpresa, CadastroPessoa cadastroPessoa)
     {
         this.cadastroVem = cadastroVem;
         this.cadastroEmpresa = cadastroEmpresa;
+        this.cadastroPessoa = cadastroPessoa;
     }
 
 //-------------------------------------------------------------------------------------------------
@@ -134,7 +135,7 @@ public class AgenciaVem {
 	
 //-------------------------------------------------------------------------------------------------
 //Metodos relacionados diretamente com classe CadastroPessoa	
-    public void cadastrarPessoa (Pessoa pessoa) throws PessoaJaCadastradaException, RepositorioPessoaCheioException 
+    public void cadastrarPessoa (Pessoa pessoa) throws PessoaJaCadastradaException, RepositorioPessoaCheioException, PessoaNaoEncontradaException 
     {
     	this.cadastroPessoa.inserir(pessoa);
     }
@@ -149,7 +150,7 @@ public class AgenciaVem {
     	this.cadastroPessoa.atualizarCadastro(pessoa);
     }
     
-    public boolean existePessoa (String cpf) 
+    public boolean existePessoa (String cpf) throws PessoaNaoEncontradaException 
     {
     	return this.cadastroPessoa.verificarExistenciaCadastro(cpf);
     }
