@@ -2,8 +2,7 @@ package ClasseFachadaGeral;
 
 import ClassesBasicas.EmpresaVem;
 import ClassesBasicas.Pessoa;
-import ClassesFachadaIndividual.CadastroEmpresa;
-import ClassesFachadaIndividual.CadastroVem;
+import ClassesFachadaIndividual.*;
 import ClassesBasicas.Vem;
 import Excecoes.*;
 
@@ -24,9 +23,9 @@ public class AgenciaVem {
 
     public void cadastrarVem(Vem vem, Pessoa pessoa, EmpresaVem empresa) throws EmpresaNaoEncontradaException, VemJaCadastradoException, RepositorioVemCheioException, PessoaNaoEncontradaException
     {
-        if(this.cadastroEmpresa.existe((empresa.getCnpj())))
+        if(this.cadastroEmpresa.existeEmpresa((empresa.getCnpj())))
         {
-            if(this.cadastroPessoa.existe(pessoa.getCpf()))
+            if(this.cadastroPessoa.verificarExistenciaCadastro(pessoa.getCpf()))
             {
                 this.cadastroVem.cadastrar(vem);
             }
@@ -125,16 +124,40 @@ public class AgenciaVem {
     //Metodo relacionados ao Repositorio
     public boolean existeEmpresa (String cnpj) 
     {
-    	this.cadastroEmpresa.existeEmpresa(cnpj);
+    	return this.cadastroEmpresa.existeEmpresa(cnpj);
     }
     //Metodo relacionados ao Repositorio
 	public EmpresaVem procurarEmpresa (String cnpj) throws EmpresaNaoEncontradaException 
 	{
-		this.cadastroEmpresa.procurarEmpresa(cnpj);
+		return this.cadastroEmpresa.procurarEmpresa(cnpj);
 	}
 	
-	
-
+//-------------------------------------------------------------------------------------------------
+//Metodos relacionados diretamente com classe CadastroPessoa	
+    public void cadastrarPessoa (Pessoa pessoa) throws PessoaJaCadastradaException, RepositorioPessoaCheioException 
+    {
+    	this.cadastroPessoa.inserir(pessoa);
+    }
+    
+    public void removerPessoa (String cpf) throws PessoaNaoEncontradaException  
+    {
+		this.cadastroPessoa.excluir(cpf);
+	}
+    
+    public void atualizarEmpresaPessoa(Pessoa pessoa) throws PessoaNaoEncontradaException 
+    {
+    	this.cadastroPessoa.atualizarCadastro(pessoa);
+    }
+    
+    public boolean existePessoa (String cpf) 
+    {
+    	return this.cadastroPessoa.verificarExistenciaCadastro(cpf);
+    }
+    
+	public Pessoa procurarPessoa (String cpf) throws PessoaNaoEncontradaException 
+	{
+		return this.cadastroPessoa.retornarPessoa(cpf);
+	} 
 
 
 }
