@@ -4,12 +4,17 @@ import Repositorios.RepositorioPessoaLista;
 import Excecoes.PessoaJaCadastradaException;
 import Excecoes.PessoaNaoEncontradaException;
 import Excecoes.RepositorioPessoaCheioException;
+import Repositorios.InterfaceRepositorioPessoa;
 
 public class CadastroPessoa {
-	RepositorioPessoaLista repPessoa = new RepositorioPessoaLista();
+	private InterfaceRepositorioPessoa repPessoa;
+	
+	public CadastroPessoa(InterfaceRepositorioPessoa rep) {
+		this.repPessoa = rep;
+	}
 	
 	//adicionar pessoa
-	public void inserir(Pessoa pessoa) throws PessoaJaCadastradaException, RepositorioPessoaCheioException {
+	public void inserir(Pessoa pessoa) throws PessoaJaCadastradaException, RepositorioPessoaCheioException, PessoaNaoEncontradaException {
 		if(verificarExistenciaCadastro(pessoa.getCpf())) {
 			throw new PessoaJaCadastradaException();
 		}else {
@@ -30,7 +35,7 @@ public class CadastroPessoa {
 	}
 	
 	//verificar existencia pessoa
-	public boolean verificarExistenciaCadastro(String cpf) {
+	public boolean verificarExistenciaCadastro(String cpf) throws PessoaNaoEncontradaException{
 		return repPessoa.existe(cpf);
 	}
 }
