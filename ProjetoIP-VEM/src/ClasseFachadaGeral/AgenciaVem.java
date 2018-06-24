@@ -48,9 +48,9 @@ public class AgenciaVem {
     {
         this.cadastroVem.atualizar(vem);
     }
-    public void procurarVem(String codigo) throws VemNaoEncontradoException
+    public Vem procurarVem(String codigo) throws VemNaoEncontradoException
     {
-        this.cadastroVem.procurar(codigo);
+        return this.cadastroVem.procurar(codigo);
     }
     public boolean existeVem(String codigo)
     {
