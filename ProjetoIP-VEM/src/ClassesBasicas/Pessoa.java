@@ -8,6 +8,10 @@ public class Pessoa {
 	private char sexo;
 	private String endereco;
 	private String profissao;
+	private boolean vemLivre;
+	private boolean vemTrabalhador;
+	private boolean vemComum;
+	private boolean vemEstudante;
 	
 	public Pessoa(String nome, String cpf, String rg, int idade,char sexo,String endereco,String profissao) {
 		this.nome = nome;
@@ -17,6 +21,10 @@ public class Pessoa {
 		this.sexo = sexo;
 		this.endereco = endereco;
 		this.profissao = profissao;
+		this.vemLivre = false;
+		this.vemTrabalhador = false;
+		this.vemComum = false;
+		this.vemEstudante = false;
 	}
 
 	public String getNome() {
@@ -69,5 +77,37 @@ public class Pessoa {
 
 	public void setProfissao(String profissao) {
 		this.profissao = profissao;
+	}
+	
+	public void setVemLivre(boolean vemLivre) {
+		this.vemLivre = vemLivre;
+	}
+
+	public boolean isVemLivre() {
+		return vemLivre;
+	}
+
+	public boolean isVemTrabalhador() {
+		return vemTrabalhador;
+	}
+
+	public boolean isVemComum() {
+		return vemComum;
+	}
+
+	public boolean isVemEstudante() {
+		return vemEstudante;
+	}
+
+	public void setVemTrabalhador(boolean vemTrabalhador) {
+		this.vemTrabalhador = vemTrabalhador;
+	}
+
+	public void setVemComum(boolean vemComum) {
+		this.vemComum = vemComum;
+	}
+
+	public void setVemEstudante(boolean vemEstudante) {
+		this.vemEstudante = vemEstudante;
 	}
 }
