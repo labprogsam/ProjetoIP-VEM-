@@ -85,6 +85,11 @@ public class InterfaceUsuario {
 									System.out.println("Insira a profissao:");
 									String profissao = in.nextLine();
 									pessoa = new Pessoa(nome,cpf,rg,idade,sexo,endereco,profissao);
+									try {
+										sistema.cadastrarPessoa(pessoa);
+									} catch (PessoaJaCadastradaException | RepositorioPessoaCheioException | PessoaNaoEncontradaException e1) {
+										System.out.println(e1);
+									}
 								}
 							}
 							
@@ -104,7 +109,6 @@ public class InterfaceUsuario {
 									else 
 										vem = new VemLivre(codigo,pessoa, empresa);
 									
-									sistema.cadastrarPessoa(pessoa);
 									sistema.cadastrarVem(vem, pessoa, empresa);
 									if(tipoVem.equals("1"))
 										pessoa.setVemComum(true);
@@ -115,7 +119,7 @@ public class InterfaceUsuario {
 									else 
 										pessoa.setVemLivre(true);
 									
-								} catch (EmpresaNaoEncontradaException | PessoaJaCadastradaException | RepositorioPessoaCheioException | PessoaNaoEncontradaException | VemJaCadastradoException | RepositorioVemCheioException e) {
+								} catch (EmpresaNaoEncontradaException | PessoaNaoEncontradaException | VemJaCadastradoException | RepositorioVemCheioException e) {
 									System.out.println(e.getMessage());
 								}
 							}
