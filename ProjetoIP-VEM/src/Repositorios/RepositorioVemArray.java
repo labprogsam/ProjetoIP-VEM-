@@ -7,7 +7,7 @@ import Excecoes.VemNaoEncontradoException;
 public class RepositorioVemArray implements RepositorioVem{
     private Vem[] arrayVem;
     private int indice;
-
+    
     public RepositorioVemArray()
     {
         this.arrayVem = new Vem[100];
@@ -105,4 +105,12 @@ public class RepositorioVemArray implements RepositorioVem{
         }
         return achou;
     }
+
+	public String relatorio() {
+		String resultado = "";
+		for(int i = 0; i < indice; i++) {
+			arrayVem[i].apresentandoDados();
+		}
+		return resultado;
+	}
 }

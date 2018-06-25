@@ -87,4 +87,10 @@ public class RepositorioVemLista implements RepositorioVem {
             return this.proximo.existe(codigo);
         }
     }
+
+	public String relatorio() {
+		if (this.vem == null)
+			return "";
+		return this.vem.apresentandoDados() + this.proximo.relatorio();
+	}
 }

@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class InterfaceUsuario {
 
-	public static void main(String[] args) throws EmpresaNaoEncontradaException, PessoaNaoEncontradaException, VemNaoEncontradoException {
+	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		String op;
 		boolean sair = false;
@@ -30,16 +30,18 @@ public class InterfaceUsuario {
 			System.out.println("3 - Sair");
 			System.out.println("--------------------------------------------------------------------------------------");
 			op = in.nextLine();
+			
 			if(op.equals("1")) {
 				boolean sairVem = false;
 				String opVem; 
 				while(!sairVem) {
 					System.out.println("--------------------------------------------------------------------------------------");
 					System.out.println("1 - Criar Vem");
-					System.out.println("2 - Recarregar Vem");//implementando					
+					System.out.println("2 - Recarregar Vem");					
 					System.out.println("3 - Bloquear Vem");
 					System.out.println("4 - Excluir Vem");
-					System.out.println("5 - Sair");
+					System.out.println("5 - Relatorio");					
+					System.out.println("6 - Sair");
 					System.out.println("--------------------------------------------------------------------------------------");
 					opVem = in.nextLine();
 					
@@ -55,66 +57,66 @@ public class InterfaceUsuario {
 						if(tipoVem.equals("1") || tipoVem.equals("2") || tipoVem.equals("3") || tipoVem.equals("4")) {
 							System.out.println("Insira o cpf da pessoa:");
 							String cpf = in.nextLine();
-							if(sistema.existePessoa(cpf)) {
+							try {
 								pessoa = sistema.procurarPessoa(cpf);
 								if((pessoa.isVemComum() && tipoVem.equals("1")) || (pessoa.isVemTrabalhador() && tipoVem.equals("2")) || (pessoa.isVemEstudante() && tipoVem.equals("3")) || (pessoa.isVemLivre() && tipoVem.equals("4"))) {
-									System.out.println("OPA!!");
 									System.out.println("Essa pessoa já tem um vem desse tipo cadastrado!");
 									pessoa = null;
-								} 
-							}else {
-								System.out.println("Insira o nome da pessoa:");
-								String nome = in.nextLine();
-								System.out.println("Insira o rg:");
-								String rg = in.nextLine();
-								System.out.println("Insira a idade:");
-								int idade = Integer.parseInt(in.nextLine());
-								System.out.println("Insira o sexo:");
-								char sexo = in.nextLine().toLowerCase().charAt(0);
-								System.out.println("Insira o endereco:");
-								String endereco = in.nextLine();
-								System.out.println("Insira a profissao:");
-								String profissao = in.nextLine();
-								pessoa = new Pessoa(nome,cpf,rg,idade,sexo,endereco,profissao);
+									} 
+								}
+							 catch (NumberFormatException | PessoaNaoEncontradaException e) {
+								System.out.println(e);
+								System.out.println("Você deseja inserir uma nova pessoa com o cpf"+ cpf +"? (S ou N)");
+								if(in.nextLine().equals("S")) {
+									System.out.println("Insira o nome da pessoa:");
+									String nome = in.nextLine();
+									System.out.println("Insira o rg:");
+									String rg = in.nextLine();
+									System.out.println("Insira a idade:");
+									int idade = Integer.parseInt(in.nextLine());
+									System.out.println("Insira o sexo:");
+									char sexo = in.nextLine().toLowerCase().charAt(0);
+									System.out.println("Insira o endereco:");
+									String endereco = in.nextLine();
+									System.out.println("Insira a profissao:");
+									String profissao = in.nextLine();
+									pessoa = new Pessoa(nome,cpf,rg,idade,sexo,endereco,profissao);
+								}
 							}
+							
 							if(pessoa != null) {
 								System.out.println("Insira o cnpj da Empresa:");
 								String cnpj = in.nextLine();
-								if(sistema.existeEmpresa(cnpj))
+								try {
 									empresa = sistema.procurarEmpresa(cnpj);
-								else
-									System.out.println("Erro, Empresa nao encontrada!!!");
-								if(empresa != null) {
-									String codigo;
-									System.out.println("Insira um codigo para esse VEM (caso queira encerrar o processo de cadastro insira '0'):");
-									codigo = in.nextLine();
-									if(!sistema.existeVem(codigo)) {
-										if(tipoVem.equals("1")) {
-											pessoa.setVemComum(true);
-											vem = new VemComum(codigo,pessoa,empresa);
-										}
-										else if(tipoVem.equals("2")) {
-											pessoa.setVemTrabalhador(true);
-											vem = new VemTrabalhador(codigo,pessoa,empresa);
-										}
-										else if(tipoVem.equals("3")) {
-											pessoa.setVemEstudante(true);
-											vem = new VemEstudantil(codigo,pessoa,empresa);
-										}
-										else { 
-											pessoa.setVemLivre(true);
-											vem = new VemLivre(codigo,pessoa,empresa);
-										}
-										try {
-											sistema.cadastrarVem(vem, pessoa, empresa);
-										} catch (RepositorioVemCheioException e) {
-											System.out.println("Foi mal! nosso banco de dados esta cheio!!");
-										} catch (VemJaCadastradoException e) {
-											System.out.println("Opa!! Ja temos uma pessoa com esse codigo.");							
-										}
-									}
+									System.out.println("Insira o codigo do Vem:");
+									String codigo = in.nextLine();
+									if(tipoVem.equals("1"))
+										vem = new VemComum(codigo,pessoa, empresa);
+									else if(tipoVem.equals("2"))
+										vem = new VemTrabalhador(codigo,pessoa, empresa);
+									else if(tipoVem.equals("3"))
+										vem = new VemEstudantil(codigo,pessoa, empresa);
+									else 
+										vem = new VemLivre(codigo,pessoa, empresa);
+									
+									sistema.cadastrarPessoa(pessoa);
+									sistema.cadastrarVem(vem, pessoa, empresa);
+									if(tipoVem.equals("1"))
+										pessoa.setVemComum(true);
+									else if(tipoVem.equals("2"))
+										pessoa.setVemTrabalhador(true);
+									else if(tipoVem.equals("3"))
+										pessoa.setVemEstudante(true);
+									else 
+										pessoa.setVemLivre(true);
+									
+								} catch (EmpresaNaoEncontradaException | PessoaJaCadastradaException | RepositorioPessoaCheioException | PessoaNaoEncontradaException | VemJaCadastradoException | RepositorioVemCheioException e) {
+									System.out.println(e);
 								}
 							}
+							
+							
 						}else {
 							System.out.println("Opa!! Você inseriu uma opcao invalida.");							
 						}
@@ -126,20 +128,17 @@ public class InterfaceUsuario {
 						String codigo;
 						System.out.println("Insira o código:");
 						codigo = in.nextLine();
-						if(sistema.existeVem(codigo)) {
-							try {
-								sistema.bloquearVem(codigo);
-							} catch (BloquearVemException e) {
-								System.out.println("Erro, vem já está bloqueado");
-							}
-						}else {
-							System.out.println("Nao existe nenhum Vem com esse codigo!");
+						try {
+							sistema.bloquearVem(codigo);
+						} catch (BloquearVemException |VemNaoEncontradoException e) {
+							System.out.println(e);
 						}
+							
 					}else if(opVem.equals("4")) {
 						String codigo;
 						System.out.println("Insira o código:");
 						codigo = in.nextLine();
-						if(sistema.existeVem(codigo)) {
+						try {
 							vem = sistema.procurarVem(codigo);
 							if(vem instanceof VemLivre)
 								vem.getUsuario().setVemLivre(false);
@@ -149,12 +148,13 @@ public class InterfaceUsuario {
 								vem.getUsuario().setVemEstudante(false);
 							else if(vem instanceof VemComum)
 								vem.getUsuario().setVemComum(false);
-							
 							sistema.removerVem(codigo);
-						}else {
-							System.out.println("Nao existe nenhum Vem com esse codigo!");
+						} catch (VemNaoEncontradoException e) {
+							System.out.println(e);
 						}
 					}else if(opVem.equals("5")) {
+						System.out.println(sistema.relatorioVem());
+					}else if(opVem.equals("6")) {
 						sairVem = true;
 					}else {
 						System.out.println("Entrada invalida!!!");
@@ -186,9 +186,9 @@ public class InterfaceUsuario {
 						try {
 							sistema.cadastrarEmpresa(empresa);
 						} catch (EmpresaJaCadastradaException e) {
-							System.out.println("Opa!! Ja temos uma empresa com esse CNPJ.");							
+							System.out.println(e);							
 						} catch (RepositorioEmpresaCheioException e) {
-							System.out.println("Foi mal! nosso banco de dados esta cheio!!");
+							System.out.println(e);
 						}
 					
 						
@@ -197,65 +197,41 @@ public class InterfaceUsuario {
 						System.out.println("(Insira 0 caso deseje voltar:)");
 						String cnpj =  in.nextLine();
 						while(!cnpj.equals("0")) {
-							if(sistema.existeEmpresa(cnpj)) {
-								empresa = sistema.procurarEmpresa(cnpj);
-								String opAtualizarVem;
-								System.out.println("--------------------------------------------------------------------------------------");
-								System.out.println("1 - Alterar nome");			
-								System.out.println("2 - Alterar endereco");			
-								System.out.println("3 - Alterar telefone");
-								System.out.println("--------------------------------------------------------------------------------------");
-								opAtualizarVem = in.nextLine();
-								if(opAtualizarVem.equals("1") || opAtualizarVem.equals("2") || opAtualizarVem.equals("3")) {
-									if(opAtualizarVem.equals("1")) {
-										System.out.println("Insira o novo nome da empresa:");
-										empresa.setNomeEmpresa(in.nextLine());
-									}else if(opAtualizarVem.equals("2")) {
-										System.out.println("Insira o novo endereco da empresa:");
-										empresa.setEndereco(in.nextLine());
-									}else {
-										System.out.println("Insira o novo telefone da empresa:");
-										empresa.setFone(in.nextLine());
+								try {
+									empresa = sistema.procurarEmpresa(cnpj);
+									String opAtualizarVem;
+									System.out.println("--------------------------------------------------------------------------------------");
+									System.out.println("1 - Alterar nome");			
+									System.out.println("2 - Alterar endereco");			
+									System.out.println("3 - Alterar telefone");
+									System.out.println("--------------------------------------------------------------------------------------");
+									opAtualizarVem = in.nextLine();
+									if(opAtualizarVem.equals("1") || opAtualizarVem.equals("2") || opAtualizarVem.equals("3")) {
+										if(opAtualizarVem.equals("1")) {
+											System.out.println("Insira o novo nome da empresa:");
+											empresa.setNomeEmpresa(in.nextLine());
+										}else if(opAtualizarVem.equals("2")) {
+											System.out.println("Insira o novo endereco da empresa:");
+											empresa.setEndereco(in.nextLine());
+										}else {
+											System.out.println("Insira o novo telefone da empresa:");
+											empresa.setFone(in.nextLine());
+										}
+										System.out.println("Alteracao realizada com sucesso!!!");
+										cnpj = "0";
 									}
-									System.out.println("Alteracao realizada com sucesso!!!");
-									cnpj = "0";
-								}else {
-									System.out.println("ERRO!!!");
-									System.out.println("Voce nao inseriu nenhuma das opcoes validas!");
+								} catch (EmpresaNaoEncontradaException e) {
+									System.out.println(e);
+									System.out.println("Insira o cnpj novamente:");
+									System.out.println("(Insira 0 caso deseje voltar:)");
 								}
-							}else {
-								System.out.println("ERRO!!!");
-								System.out.println("empresa com esse cnpj nao foi encontrada!");
-								System.out.println("Insira o cnpj novamente:");
-								System.out.println("(Insira 0 caso deseje voltar:)");
-								cnpj =  in.nextLine();
-							}
 						}
 						
 						
 					}else if(opEmpresa.equals("3")) {
-						System.out.println("Insira o cnpj da empresa que voce deseja excluir:");
-						System.out.println("(Insira 0 caso deseje voltar)");
-						String cnpj =  in.nextLine();
-						while(!cnpj.equals("0")) {
-							if(sistema.existeEmpresa(cnpj)) {
-								sistema.removerEmpresa(cnpj);
-								System.out.println("Empresa excluida com sucesso!!!");
-								cnpj = "0";
-							}
-							else {
-								System.out.println("ERRO!!!");
-								System.out.println("empresa com esse cnpj nÃ£o foi encontrada!");
-								System.out.println("(Insira 0 caso deseje voltar)");
-								System.out.println("Insira o cnpj novamente:");
-								cnpj =  in.nextLine();
-							}
-						}
-						
+						//implementando excluir
 					}else if(opEmpresa.equals("4")) {
 						sairEmpresa = true;
-						
-						
 					}else {
 						System.out.println("Entrada invalida!!!");
 					}

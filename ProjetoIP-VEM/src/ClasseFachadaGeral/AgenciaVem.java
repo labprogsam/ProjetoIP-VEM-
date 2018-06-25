@@ -102,7 +102,9 @@ public class AgenciaVem {
     {
         this.cadastroVem.sairFerias(codigo);
     }
-    
+    public String relatorioVem() {
+    	return this.cadastroVem.apresentarDados();
+    }
     
     //-------------------------------------------------------------------------------------------------
     //Metodos relacionados diretamente com classe CadastroEmpresa

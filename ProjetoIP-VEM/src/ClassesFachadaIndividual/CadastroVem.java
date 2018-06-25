@@ -141,4 +141,7 @@ public class CadastroVem {
             throw new TipoVemInvalidoException();
         }
     }
+    public String apresentarDados(){
+    	return repositorio.relatorio();
+    }
 }

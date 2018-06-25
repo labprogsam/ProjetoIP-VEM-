@@ -10,5 +10,6 @@ public interface RepositorioVem {
     void atualizar(Vem vem) throws VemNaoEncontradoException;
     Vem procurar(String codigo) throws VemNaoEncontradoException;
     boolean existe(String codigo);
+    String relatorio();
 
 }
