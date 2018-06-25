@@ -229,7 +229,13 @@ public class InterfaceUsuario {
 						
 						
 					}else if(opEmpresa.equals("3")) {
-						//implementando excluir
+						System.out.println("Insira o cnpj da empresa que voce deseja excluir:");
+						String cnpj =  in.nextLine();
+						try {
+							sistema.removerEmpresa(cnpj);
+						} catch (EmpresaNaoEncontradaException e) {
+							System.out.println(e);
+						}
 					}else if(opEmpresa.equals("4")) {
 						sairEmpresa = true;
 					}else {
