@@ -70,7 +70,7 @@ public class InterfaceUsuario {
 								}
 							 catch (NumberFormatException | PessoaNaoEncontradaException e) {
 								System.out.println(e.getMessage());
-								System.out.println("Voc� deseja inserir uma nova pessoa com o cpf"+ cpf +"? (S ou N)");
+								System.out.println("Voce deseja inserir uma nova pessoa com o cpf"+ cpf +"? (S ou N)");
 								if(in.nextLine().equals("S")) {
 									System.out.println("Insira o nome da pessoa:");
 									String nome = in.nextLine();

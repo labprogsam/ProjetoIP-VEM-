@@ -27,15 +27,14 @@ public class RepositorioVemLista implements RepositorioVem {
     }
     public void remover(String codigo) throws VemNaoEncontradoException
     {
-
-        if(this.vem.getCodigo().equals(codigo))
+        if(this.vem == null)
+        {
+            throw new VemNaoEncontradoException();
+        }
+        else if(this.vem.getCodigo().equals(codigo))
         {
             this.vem = this.proximo.vem;
             this.proximo = this.proximo.proximo;
-        }
-        else if(this.vem == null)
-        {
-            throw new VemNaoEncontradoException();
         }
         else
         {
@@ -44,13 +43,13 @@ public class RepositorioVemLista implements RepositorioVem {
     }
     public void  atualizar(Vem vem) throws VemNaoEncontradoException
     {
-        if(this.vem.getCodigo().equals(vem.getCodigo()))
-        {
-            this.vem = vem;
-        }
-        else if(this.vem == null)
+        if(this.vem == null)
         {
             throw new VemNaoEncontradoException();
+        }
+        else if(this.vem.getCodigo().equals(vem.getCodigo()))
+        {
+            this.vem = vem;
         }
         else
         {
@@ -59,14 +58,13 @@ public class RepositorioVemLista implements RepositorioVem {
     }
     public Vem procurar(String codigo) throws VemNaoEncontradoException
     {
-
-        if(this.vem.getCodigo().equals(codigo))
-        {
-            return this.vem;
-        }
-        else if(this.vem == null)
+        if(this.vem == null)
         {
             throw new VemNaoEncontradoException();
+        }
+        else if(this.vem.getCodigo().equals(codigo))
+        {
+            return this.vem;
         }
         else
         {
