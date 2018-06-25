@@ -5,7 +5,7 @@ public class VemJaCadastradoException extends Exception {
 
     public VemJaCadastradoException(String codigo)
     {
-        super("Vem já cadastrado");
+        super("Vem ja cadastrado");
         this.codigo = codigo;
     }
 

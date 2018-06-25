@@ -72,12 +72,12 @@ public abstract class Vem {
 
     }
     public String apresentandoDados() {
-    	return "Codigo:" + this.codigo + '\n' + "Nome:" + this.usuario.getNome() + '\n' + "cpf:" + this.usuario.getCpf() + '\n' + '\n'; 
+    	return "Codigo:" + this.codigo + '\n' + "Nome:" + this.usuario.getNome() + '\n' + "cpf:" + this.usuario.getCpf() + '\n' + "Saldo:" + this.saldo + '\n'+ '\n'; 
     }
     public String apresentandoDados(String cpf) {
     	String dados = "";
     	if(this.usuario.getCpf().equals(cpf))
-    		dados += "Codigo:" + this.codigo + '\n' + "Nome:" + this.usuario.getNome() + '\n' + '\n';
+    		dados += "Codigo:" + this.codigo + '\n' + "Nome:" + this.usuario.getNome() + '\n' + "Saldo:" + this.saldo + '\n' + '\n';
     	return dados;
     }
     //Esses metodos podem ser imprementadoss de forma diferente nas subclasses

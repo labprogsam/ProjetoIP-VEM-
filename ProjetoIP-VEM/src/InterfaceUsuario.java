@@ -41,7 +41,7 @@ public class InterfaceUsuario {
 					System.out.println("3 - Bloquear Vem");
 					System.out.println("4 - Excluir Vem");
 					System.out.println("5 - Relatorio");
-					System.out.println("6 - Desbloquear");
+					System.out.println("6 - Desbloquear Vem");
 					System.out.println("7 - Pagar");
 					System.out.println("8 - Menu do vem trabalhador");
 					System.out.println("9 - Render bonus para o vem Estudante");
@@ -183,7 +183,7 @@ public class InterfaceUsuario {
 						} catch (DesbloquearVemException |VemNaoEncontradoException e) {
 							System.out.println(e.getMessage());
 						}
-					}else if(op.equals("7")){
+					}else if(opVem.equals("7")){
 						String codigo;
 						System.out.println("Insira o codigo");
 						codigo = in.nextLine();
@@ -285,6 +285,7 @@ public class InterfaceUsuario {
 						empresa = new EmpresaVem(nome,cnpj,endereco,telefone);
 						try {
 							sistema.cadastrarEmpresa(empresa);
+							System.out.println("Empresa cadastrada com sucesso!!!");
 						} catch (EmpresaJaCadastradaException e) {
 							System.out.println(e.getMessage());
 						} catch (RepositorioEmpresaCheioException e) {
@@ -334,6 +335,7 @@ public class InterfaceUsuario {
 						String cnpj =  in.nextLine();
 						try {
 							sistema.removerEmpresa(cnpj);
+							System.out.println("Empresa excluida com sucesso!!!");
 						} catch (EmpresaNaoEncontradaException e) {
 							System.out.println(e.getMessage());
 						}

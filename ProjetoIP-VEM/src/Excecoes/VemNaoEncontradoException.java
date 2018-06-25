@@ -4,7 +4,7 @@ public class VemNaoEncontradoException extends Exception {
 
     public VemNaoEncontradoException()
     {
-        super("Vem não encontrado");
+        super("Vem nao encontrado");
     }
 
 }
