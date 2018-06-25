@@ -70,7 +70,7 @@ public class InterfaceUsuario {
 								}
 							 catch (NumberFormatException | PessoaNaoEncontradaException e) {
 								System.out.println(e.getMessage());
-								System.out.println("Voce deseja inserir uma nova pessoa com o cpf"+ cpf +"? (S ou N)");
+								System.out.println("Voce deseja inserir uma nova pessoa com o cpf "+ cpf +" ? (S ou N)");
 								if(in.nextLine().equals("S")) {
 									System.out.println("Insira o nome da pessoa:");
 									String nome = in.nextLine();
@@ -138,7 +138,15 @@ public class InterfaceUsuario {
 							vem = sistema.procurarVem(codigo);
 							if(vem instanceof VemLivre)
 							{
-								sistema.recarregarEspecial(codigo,valor);
+								System.out.println("Informe qual tipo de recarga deseja fazer");
+								System.out.println("1 - Saldo normal");
+								System.out.println("2 - Saldo especial");
+								String opRecarga = in.nextLine();
+								if(opRecarga.equals("1")){
+									sistema.recarregar(codigo,valor);
+								}else{
+									sistema.recarregarEspecial(codigo,valor);
+								}
 							}
 							else
 							{
@@ -282,7 +290,7 @@ public class InterfaceUsuario {
 						String nome = in.nextLine();
 						System.out.println("Insira o cnpj da empresa:");
 						String cnpj = in.nextLine();
-						System.out.println("Insira o endreco:");
+						System.out.println("Insira o endereco:");
 						String endereco = in.nextLine();
 						System.out.println("Insira o telefone:");
 						String telefone = in.nextLine();
