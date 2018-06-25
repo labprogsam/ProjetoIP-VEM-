@@ -65,7 +65,7 @@ public class RepositorioVemArray implements RepositorioVem{
             {
                 if(this.arrayVem[i].getCodigo().equals(vem.getCodigo()))
                 {
-                    arrayVem[i] = vem;
+                    this.arrayVem[i] = vem;
                     atualizou = true;
                 }
             }
@@ -109,7 +109,7 @@ public class RepositorioVemArray implements RepositorioVem{
 	public String relatorio() {
 		String resultado = "";
 		for(int i = 0; i < indice; i++) {
-			arrayVem[i].apresentandoDados();
+			this.arrayVem[i].apresentandoDados();
 		}
 		return resultado;
 	}
