@@ -40,14 +40,18 @@ public class InterfaceUsuario {
 					System.out.println("2 - Recarregar Vem");					
 					System.out.println("3 - Bloquear Vem");
 					System.out.println("4 - Excluir Vem");
-					System.out.println("5 - Relatorio");					
-					System.out.println("6 - Sair");
+					System.out.println("5 - Relatorio");
+					System.out.println("6 - Desbloquear");
+					System.out.println("7 - Pagar");
+					System.out.println("8 - Menu do vem trabalhador");
+					System.out.println("9 - Render bonus para o vem Estudante");
+					System.out.println("10 - Sair");
 					System.out.println("--------------------------------------------------------------------------------------");
 					opVem = in.nextLine();
 					
 					if(opVem.equals("1")) {
 						System.out.println("--------------------------------------------------------------------------------------");
-						System.out.println("Qual tipo de vem você deseja criar:");
+						System.out.println("Qual tipo de vem voce deseja criar:");
 						System.out.println("1 - Vem Comum");						
 						System.out.println("2 - Vem Trabalhador");
 						System.out.println("3 - Vem Estudantil");
@@ -60,13 +64,13 @@ public class InterfaceUsuario {
 							try {
 								pessoa = sistema.procurarPessoa(cpf);
 								if((pessoa.isVemComum() && tipoVem.equals("1")) || (pessoa.isVemTrabalhador() && tipoVem.equals("2")) || (pessoa.isVemEstudante() && tipoVem.equals("3")) || (pessoa.isVemLivre() && tipoVem.equals("4"))) {
-									System.out.println("Essa pessoa já tem um vem desse tipo cadastrado!");
+									System.out.println("Essa pessoa ja tem um vem desse tipo cadastrado!");
 									pessoa = null;
 									} 
 								}
 							 catch (NumberFormatException | PessoaNaoEncontradaException e) {
-								System.out.println(e);
-								System.out.println("Você deseja inserir uma nova pessoa com o cpf"+ cpf +"? (S ou N)");
+								System.out.println(e.getMessage());
+								System.out.println("Vocï¿½ deseja inserir uma nova pessoa com o cpf"+ cpf +"? (S ou N)");
 								if(in.nextLine().equals("S")) {
 									System.out.println("Insira o nome da pessoa:");
 									String nome = in.nextLine();
@@ -112,31 +116,47 @@ public class InterfaceUsuario {
 										pessoa.setVemLivre(true);
 									
 								} catch (EmpresaNaoEncontradaException | PessoaJaCadastradaException | RepositorioPessoaCheioException | PessoaNaoEncontradaException | VemJaCadastradoException | RepositorioVemCheioException e) {
-									System.out.println(e);
+									System.out.println(e.getMessage());
 								}
 							}
 							
 							
 						}else {
-							System.out.println("Opa!! Você inseriu uma opcao invalida.");							
+							System.out.println("Opa!! Voce inseriu uma opcao invalida.");
 						}
 						
 					}else if(opVem.equals("2")) {
-						//implementando
-							
+						System.out.println("Informe o valor a ser recarregado");
+						double valor = Double.parseDouble(in.nextLine());
+						System.out.println("Informe o codigo");
+						String codigo = in.nextLine();
+						try{
+							vem = sistema.procurarVem(codigo);
+							if(vem instanceof VemLivre)
+							{
+								sistema.recarregarEspecial(codigo,valor);
+							}
+							else
+							{
+								sistema.recarregar(codigo,valor);
+							}
+						}
+						catch(VemNaoEncontradoException | TipoVemInvalidoException | RecargaInvalidaException e){
+							System.out.println(e.getMessage());
+						}
 					}else if(opVem.equals("3")) {
 						String codigo;
-						System.out.println("Insira o código:");
+						System.out.println("Insira o codigo:");
 						codigo = in.nextLine();
 						try {
 							sistema.bloquearVem(codigo);
 						} catch (BloquearVemException |VemNaoEncontradoException e) {
-							System.out.println(e);
+							System.out.println(e.getMessage());
 						}
 							
 					}else if(opVem.equals("4")) {
 						String codigo;
-						System.out.println("Insira o código:");
+						System.out.println("Insira o codigo:");
 						codigo = in.nextLine();
 						try {
 							vem = sistema.procurarVem(codigo);
@@ -150,11 +170,91 @@ public class InterfaceUsuario {
 								vem.getUsuario().setVemComum(false);
 							sistema.removerVem(codigo);
 						} catch (VemNaoEncontradoException e) {
-							System.out.println(e);
+							System.out.println(e.getMessage());
 						}
 					}else if(opVem.equals("5")) {
 						System.out.println(sistema.relatorioVem());
-					}else if(opVem.equals("6")) {
+					}else if(opVem.equals("6")){
+						String codigo;
+						System.out.println("Insira o codigo:");
+						codigo = in.nextLine();
+						try {
+							sistema.desbloquearVem(codigo);
+						} catch (DesbloquearVemException |VemNaoEncontradoException e) {
+							System.out.println(e.getMessage());
+						}
+					}else if(op.equals("7")){
+						String codigo;
+						System.out.println("Insira o codigo");
+						codigo = in.nextLine();
+						try{
+							vem = sistema.procurarVem(codigo);
+							if(vem instanceof VemLivre)
+							{
+								System.out.println("Onde deseja fazer o pagamento?");
+								System.out.println("1 - Saldo normal");
+								System.out.println("2 - Saldo especial");
+								String tipoPagar = in.nextLine();
+								if(tipoPagar.equals("1"))
+								{
+									sistema.pagar(codigo);
+								}
+								else if(tipoPagar.equals("2"))
+								{
+									sistema.pagarEspecial(codigo);
+								}
+							}
+							else
+							{
+								sistema.pagar(codigo);
+							}
+						}
+						catch (VemNaoEncontradoException | SaldoInsuficienteException | TipoVemInvalidoException e)
+						{
+							System.out.println(e.getMessage());
+						}
+					}else if(opVem.equals("8")) {
+						System.out.println("O que deseja fazer?");
+						System.out.println("1 - Entrar de ferias");
+						System.out.println("2 - Sair de ferias");
+						System.out.println("3 - Render bonus de ferias");
+						String opcao = in.nextLine();
+						System.out.println("Insira o codigo");
+						String codigo = in.nextLine();
+						if(opcao.equals("1")) {
+							try{
+								sistema.entrarFerias(codigo);
+							}catch (VemNaoEncontradoException | EntrarFeriasException | TipoVemInvalidoException e) {
+								System.out.println(e.getMessage());
+							}
+						}else if(opcao.equals("2")) {
+							try{
+								sistema.sairFerias(codigo);
+							}catch (VemNaoEncontradoException | SairFeriasException | TipoVemInvalidoException e) {
+								System.out.println(e.getMessage());
+							}
+						}else if(opcao.equals("3")) {
+							try{
+								sistema.renderBonusFerias(codigo);
+							}catch (VemNaoEncontradoException | TipoVemInvalidoException | PeriodoFeriasException e)
+							{
+								System.out.println(e.getMessage());
+							}
+						}
+						else
+						{
+							System.out.println("Ops, opcao invalida!!");
+						}
+					}else if(opVem.equals("9")) {
+						System.out.println("Insira o codigo");
+						String codigo = in.nextLine();
+						try{
+							sistema.renderBonus(codigo);
+						}catch (VemNaoEncontradoException | TipoVemInvalidoException| RecargaInvalidaException e) {
+							System.out.println(e.getMessage());
+						}
+
+					}else if(opVem.equals("10")) {
 						sairVem = true;
 					}else {
 						System.out.println("Entrada invalida!!!");
@@ -186,9 +286,9 @@ public class InterfaceUsuario {
 						try {
 							sistema.cadastrarEmpresa(empresa);
 						} catch (EmpresaJaCadastradaException e) {
-							System.out.println(e);							
+							System.out.println(e.getMessage());
 						} catch (RepositorioEmpresaCheioException e) {
-							System.out.println(e);
+							System.out.println(e.getMessage());
 						}
 					
 						
@@ -221,9 +321,10 @@ public class InterfaceUsuario {
 										cnpj = "0";
 									}
 								} catch (EmpresaNaoEncontradaException e) {
-									System.out.println(e);
+									System.out.println(e.getMessage());
 									System.out.println("Insira o cnpj novamente:");
 									System.out.println("(Insira 0 caso deseje voltar:)");
+									cnpj =  in.nextLine();
 								}
 						}
 						
@@ -234,7 +335,7 @@ public class InterfaceUsuario {
 						try {
 							sistema.removerEmpresa(cnpj);
 						} catch (EmpresaNaoEncontradaException e) {
-							System.out.println(e);
+							System.out.println(e.getMessage());
 						}
 					}else if(opEmpresa.equals("4")) {
 						sairEmpresa = true;

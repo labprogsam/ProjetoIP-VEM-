@@ -3,6 +3,6 @@ package Excecoes;
 public class RepositorioEmpresaCheioException extends Exception {
 
 	public RepositorioEmpresaCheioException() {
-		super("O Repositório de empresas está cheio.");
+		super("O Repositorio de empresas esta cheio.");
 	}
 }

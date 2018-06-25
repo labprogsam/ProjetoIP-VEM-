@@ -38,7 +38,7 @@ public class RepositorioEmpresaArray implements InterfaceRepositorioEmpresa {
 				}
 			}
 			
-			// Esse for servirá para organizar o array após algum elemento ser retirado.
+			// Esse for servira para organizar o array apos algum elemento ser retirado.
 			
 			for (int i = 0; i < this.indice; i++) {
 				if (this.contas[i] == null && this.contas[i + 1] != null) {
